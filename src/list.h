@@ -1,9 +1,5 @@
-//
-// Created by jadson on 09/03/2022.
-//
-
-#ifndef T5_SEARCH_H
-#define T5_SEARCH_H
+#ifndef LIST_H
+#define LIST_H
 
 #include <functional>  // for function
 #include <string>  // for char_traits, operator+, string, basic_string, to_string
@@ -19,24 +15,15 @@
 
 #include <QString>
 
-#include "./traverse.h"
-
 using namespace ftxui;
 
-        class Search : public ComponentBase {
+        class List : public ComponentBase {
         public:
-            ButtonOption button_option = ButtonOption();
-            Component input;
             int selected = 0;
             MenuOption menu_option;
             std::vector<std::string> files;
-            std::shared_ptr<ComponentBase> files_menu;
-            std::shared_ptr<ComponentBase> submit_con;
-            std::shared_ptr<ComponentBase> input_con;
-            std::string  query;
+            std::shared_ptr<ComponentBase> files_con;
             std::shared_ptr<ComponentBase> render;
-            Search();
+            List(std::vector<std::string> list);
         };
-
-
-#endif //T5_SEARCH_H
+#endif // LIST_H
