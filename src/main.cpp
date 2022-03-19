@@ -16,7 +16,7 @@
 
 #include "./search.h"
 #include "./process.h"
-#include "./list.h"
+#include "./directories.h"
 
 using namespace ftxui;
 using json = nlohmann::json;
@@ -37,24 +37,8 @@ int main(int argc, char *argv[]) {
     auto button_option = ButtonOption();
     button_option.border = false;
 
-    auto buttonTest = Container::Horizontal({
-                                                Button(
-                                                "Pesquisar", [&] {
-                                                    new Process();
-                                                    value++;
-                                                }, &button_option),
-                                            });
-
-    auto termin = Renderer(buttonTest, [&] {
-        return vbox({
-                        buttonTest->Render(),
-                        text("Value: "+ std::to_string(value))
-                    }) |
-                border;
-    });
-
-    Search search = Search();
-    List list_files = List({"abc","1234"});
+    Search  search = Search();
+    Directories directories = Directories(&search);
 
 
 
@@ -65,7 +49,7 @@ int main(int argc, char *argv[]) {
     auto tab_content = Container::Tab(
                 {
                     search.render,
-                    termin,
+                    directories.render,
                 },
                 &tab_index);
 
@@ -78,8 +62,7 @@ int main(int argc, char *argv[]) {
         return vbox({
                         tab_selection->Render(),
                         tab_content->Render() | flex,
-                    }) |
-                border;
+                    }) | border;
     });
 
 
@@ -92,7 +75,7 @@ int main(int argc, char *argv[]) {
         return hbox({
                         button_quit->Render() | align_right,
                         text("")|flex,
-                        text("Organizador de Imagens") | bold| center,
+                        text("Organizador de Imagens") | bold | center,
                         text("")|flex,
                     });
     });

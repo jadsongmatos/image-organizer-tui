@@ -41,7 +41,19 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 COMPONENTS Core LinguistTools REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core LinguistTools REQUIRED)
 
-add_executable(image-organizer-tui src/main.cpp src/search.cpp src/search.h src/process.cpp src/process.h src/traverse.cpp src/traverse.h src/list.h src/list.cpp)
+add_executable(image-organizer-tui
+    src/main.cpp
+    src/search.cpp
+    src/search.h
+    src/process.cpp
+    src/process.h
+    src/traverse.cpp
+    src/traverse.h
+    src/list.h
+    src/list.cpp
+    src/directories.h
+    src/directories.cpp
+    )
 #target_include_directories(image-organizer-tui src)
 
 target_link_libraries(image-organizer-tui

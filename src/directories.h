@@ -1,5 +1,5 @@
-#ifndef LIST_H
-#define LIST_H
+#ifndef DIRECTORIES_H
+#define DIRECTORIES_H
 
 #include <functional>  // for function
 #include <string>  // for char_traits, operator+, string, basic_string, to_string
@@ -15,23 +15,27 @@
 
 #include <QString>
 
+#include "./list.h"
+#include "./traverse.h"
+#include "./search.h"
+
 using namespace ftxui;
 
-class List : public ComponentBase {
+class Directories : public ComponentBase {
 public:
+    int value;
+    ButtonOption button_option = ButtonOption();
+    std::shared_ptr<ComponentBase> submit_con;
+    std::string  query;
+    Component input;
     int selected = 0;
     MenuOption menu_option;
-    std::vector<std::string> list;
-    std::shared_ptr<ComponentBase> list_con = Container::Vertical({
-                                                                      Menu(&list,&selected,&menu_option)
-                                                                  });
-
-    std::shared_ptr<ComponentBase> render = Renderer(list_con, [&] {
-        return vbox({
-                        list_con->Render()
-                    }) | vscroll_indicator | frame |
-                size(HEIGHT, LESS_THAN, 10) | border;
-    });
-
+    List list_dir;
+    std::shared_ptr<ComponentBase> dir_con;
+    std::shared_ptr<ComponentBase> render;
+    void addFiles(std::string i_string);
+    Search *search_files;
+    Directories(Search * i_search);
 };
-#endif // LIST_H
+
+#endif // DIRECTORIES_H

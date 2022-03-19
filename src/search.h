@@ -20,23 +20,22 @@
 #include <QString>
 
 #include "./traverse.h"
+#include "./list.h"
 
 using namespace ftxui;
 
-        class Search : public ComponentBase {
-        public:
-            ButtonOption button_option = ButtonOption();
-            Component input;
-            int selected = 0;
-            MenuOption menu_option;
-            std::vector<std::string> files;
-            std::shared_ptr<ComponentBase> files_menu;
-            std::shared_ptr<ComponentBase> submit_con;
-            std::shared_ptr<ComponentBase> input_con;
-            std::string  query;
-            std::shared_ptr<ComponentBase> render;
-            Search();
-        };
+class Search : public ComponentBase {
+public:
+    ButtonOption button_option = ButtonOption();
+    std::shared_ptr<ComponentBase> submit_con;
+    Component input;
+    List list_files;
+    std::shared_ptr<ComponentBase> input_con;
+    std::string  query;
+    std::shared_ptr<ComponentBase> render;
+    void addFiles(std::string i_string);
+    Search();
+};
 
 
 #endif //T5_SEARCH_H
