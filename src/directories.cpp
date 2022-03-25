@@ -3,6 +3,7 @@
 Directories::Directories(Search * i_search) {
     search_files = i_search;
     input = Input(&query, "***");
+
     submit_con = Container::Horizontal({
                                            Button(
                                            "Adicionar", [&] {

@@ -45,8 +45,6 @@ add_executable(image-organizer-tui
     src/main.cpp
     src/search.cpp
     src/search.h
-    src/process.cpp
-    src/process.h
     src/traverse.cpp
     src/traverse.h
     src/list.h

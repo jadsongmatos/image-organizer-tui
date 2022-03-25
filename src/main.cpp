@@ -15,7 +15,6 @@
 #include <nlohmann/json.hpp>
 
 #include "./search.h"
-#include "./process.h"
 #include "./directories.h"
 
 using namespace ftxui;
