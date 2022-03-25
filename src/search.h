@@ -5,9 +5,9 @@
 #ifndef T5_SEARCH_H
 #define T5_SEARCH_H
 
-#include <functional>  // for function
-#include <string>  // for char_traits, operator+, string, basic_string, to_string
-#include <memory>  // for allocator, __shared_ptr_access
+#include <functional>
+#include <string>
+#include <memory>
 #include <vector>
 #include <iostream>
 #include <algorithm>
@@ -25,6 +25,7 @@
 #include "ftxui/dom/elements.hpp"  // for text, hbox, separator, Element, operator|, vbox, border
 
 #include <QString>
+#include <QDir>
 
 #include "./traverse.h"
 #include "./list.h"
@@ -36,6 +37,7 @@ public:
     ButtonOption button_option = ButtonOption();
     Component input;
     List list_files;
+    List list_obj;
 
     //List list_files_cont;
     std::shared_ptr<ComponentBase> input_con;
@@ -53,7 +55,7 @@ public:
                                                                       });
 
     std::shared_ptr<ComponentBase> render;
-    void addFiles(std::string i_string);
+    void addFiles(int i,std::string i_string);
     void searchFiles(std::string i_string);
 
     Search();

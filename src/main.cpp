@@ -1,5 +1,7 @@
 #include <string>  // for char_traits, operator+, string, basic_string, to_string
 #include <memory>  // for allocator, __shared_ptr_access
+#include <future>
+#include <functional>
 
 #include "ftxui/component/component.hpp"       // for Input, Renderer, Vertical
 #include "ftxui/component/component_options.hpp"  // for InputOption
@@ -12,6 +14,10 @@
 #include "ftxui/dom/node.hpp"      // for Render
 #include "ftxui/screen/color.hpp"  // for ftxui
 
+#include <QString>
+#include <QDir>
+
+
 #include <nlohmann/json.hpp>
 
 #include "./search.h"
@@ -19,6 +25,19 @@
 
 using namespace ftxui;
 using json = nlohmann::json;
+
+template<class Func>
+void watchDirectory(const QString&dir, Func&& func)
+{
+    QDir d(dir);
+    auto future = std::async(std::launch::async, [&]{
+        for (auto& entry : d.entryInfoList(QDir::Files)){
+            func(entry.fileName().toStdString());
+        }
+    });
+}
+
+
 
 int main(int argc, char *argv[]) {
 
@@ -39,6 +58,10 @@ int main(int argc, char *argv[]) {
     Search  search = Search();
     Directories directories = Directories(&search);
 
+    watchDirectory("/tmp/ai", [&](const std::string& filename)
+    {
+        search.list_obj.list.push_back(filename);
+    });
 
 
     int tab_index = 0;

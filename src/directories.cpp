@@ -9,7 +9,7 @@ Directories::Directories(Search * i_search) {
                                            "Adicionar", [&] {
                                                if(query.compare("")){
                                                    list_dir.list.push_back(query);
-                                                   search_files->addFiles(query);
+                                                   search_files->addFiles(0,query);
                                                    query = "";
                                                }
                                            }, &button_option),
