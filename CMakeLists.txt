@@ -51,6 +51,8 @@ add_executable(image-organizer-tui
     src/list.cpp
     src/directories.h
     src/directories.cpp
+    src/aiwatcher.h
+    src/aiwatcher.cpp
     )
 #target_include_directories(image-organizer-tui src)
 

@@ -14,30 +14,14 @@
 #include "ftxui/dom/node.hpp"      // for Render
 #include "ftxui/screen/color.hpp"  // for ftxui
 
-#include <QString>
-#include <QDir>
-
-
 #include <nlohmann/json.hpp>
 
 #include "./search.h"
 #include "./directories.h"
+#include "./aiwatcher.h"
 
 using namespace ftxui;
 using json = nlohmann::json;
-
-template<class Func>
-void watchDirectory(const QString&dir, Func&& func)
-{
-    QDir d(dir);
-    auto future = std::async(std::launch::async, [&]{
-        for (auto& entry : d.entryInfoList(QDir::Files)){
-            func(entry.fileName().toStdString());
-        }
-    });
-}
-
-
 
 int main(int argc, char *argv[]) {
 
@@ -58,14 +42,24 @@ int main(int argc, char *argv[]) {
     Search  search = Search();
     Directories directories = Directories(&search);
 
-    watchDirectory("/tmp/ai", [&](const std::string& filename)
-    {
-        search.list_obj.list.push_back(filename);
+    aiWatcher("/tmp/ai", [&](const std::string &path) {
+        search.list_obj.list.push_back(path);
     });
+
+    /*
+    aiWatcher("/tmp/ai", [&](const std::string &path) {
+        QDirIterator it(path.c_str(), QStringList() << "*.*", QDir::Files, QDirIterator::Subdirectories);
+        while (it.hasNext()) {
+            auto file = it.next();
+            // do something with the file
+            search.list_obj.list.push_back(path);
+        }
+    });
+    */
 
 
     int tab_index = 0;
-    std::vector<std::string> tab_entries = { "Pesquisar", "Diretorios"};
+            std::vector<std::string> tab_entries = { "Pesquisar", "Diretorios"};
 
     auto tab_selection = Toggle(&tab_entries, &tab_index);
     auto tab_content = Container::Tab(
